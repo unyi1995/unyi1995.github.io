@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Graph signal processing</title>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+<body>
+
+<H2>Graph signal processing</H2>
+
+A graph is formally a pair \((\mathcal{V}, \mathcal{E})\) where \(\mathcal{V} = \{1, ..., n\}\) is the set of vertices and \(\mathcal{E} \subseteq \mathcal{V} \times \mathcal{V}\) is the set of edges.<br>
+We associate a weight \(a_{i} \ge 0\) with each vertex \(i \in \mathcal{V}\) and a weight \(w_{ij} \ge 0\) with each edge \((i,j) \in \mathcal{E}\).<br>
+We define real functions called graph signals \(f: \mathcal{V} \to \mathbb{R}\) and \(F: \mathcal{E} \to \mathbb{R}\) on the vertices and edges respectively.<br>
+We also define the Hilbert spaces \(L^{2}(\mathcal{V})\) and \(L^{2}(\mathcal{E})\) of such functions by specifying the respective inner products:
+$$\langle f,g \rangle _{L^{2}(\mathcal{V})}=\sum_{i \in \mathcal{V}}a_{i}f_{i}g_{i}$$
+$$\langle F,G \rangle _{L^{2}(\mathcal{E})}=\sum_{i,j \in \mathcal{E}}w_{ij}F_{ij}G_{ij}$$
+The graph gradient is an operator \(\nabla :L^{2}(\mathcal{V}) \to L^{2}(\mathcal{E})\) mapping functions defined on the vertices to functions defined on the edges:
+$$(\nabla f)_{ij}=f_{i}-f_{j}$$
+The graph divergence is an operator \(\nabla \cdot :L^{2}(\mathcal{V}) \to L^{2}(\mathcal{E})\) mapping functions defined on the vertices to functions defined on the edges:
+$$(\nabla \cdot F)_{i}=\frac{1}{a_{i}}\sum_{j:(i,j) \in \mathcal{E}}w_{ij}F_{ij}$$
+The graph Laplacian is an operator \(\nabla:L^{2}(\mathcal{V}) \to L^{2}(\mathcal{V})\) defined as \(\Delta =-\nabla \cdot \nabla\) in analogy with the classical Laplacian.<br>
+Combining the expressions for the divergence and gradient operators:
+$$(\Delta f)_{i}=\frac{1}{a_{i}}\sum_{j:(i,j) \in {\mathcal{E}}}w_{ij}(f_{i}-f_{j})$$
+The formula captures the intuitive geometric interpretation of the Laplacian as the sum of differences between the function value at a point and the function values around the point.<br>
+For computations we use the following vectorized notation: \(\mathbf{A}=diag(a_{1}, ..., a_{n})\) is the vertex weight matrix, \(\mathbf{W}=(w_{ij})\) is the edge weight matrix (with \(w_{ij}=0\) if \((i,j) \notin \mathcal{E}\)), and \(\textbf{D}=diag(\sum_{j}w_{ij})\) is the degree matrix.<br>
+The application of the Laplacian to a graph signal \(f \in L^{2}(\mathcal{V})\) represented as a vector \(\mathbf{f}=(f_{1}, ..., f_{n})^{T}\):
+$$\Delta \mathbf{f}=\mathbf{A^{-1}}(\mathbf{D}-\mathbf{W})$$
+The Laplacian is symmetric so it has a finite set of orthonormal eigenfunctions \(\phi_{1}, ..., \phi_{n}\) satisfying \(\langle \phi_{i},\phi_{j} \rangle = \delta_{ij}\).<br>
+In analogy with the classical case, the eigenfunctions of the Laplacian form the Fourier basis.<br>
+
+
+</body>
+
+</html>
